@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qianfeng.mapper.TProductDescriptionMapper">
+  <resultMap id="BaseResultMap" type="com.qianfeng.entity.TProductDescription">
+    <id column="t_product_description_id" jdbcType="BIGINT" property="tProductDescriptionId" />
+    <result column="t_product_id" jdbcType="BIGINT" property="tProductId" />
+    <result column="flag" jdbcType="BIT" property="flag" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.qianfeng.entity.TProductDescription">
+    <result column="t_product_descriptioncontext" jdbcType="LONGVARCHAR" property="tProductDescriptioncontext" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    t_product_description_id, t_product_id, flag
+  </sql>
+  <sql id="Blob_Column_List">
+    t_product_descriptioncontext
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_product_description
+    where t_product_description_id = #{tProductDescriptionId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_product_description
+    where t_product_description_id = #{tProductDescriptionId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.qianfeng.entity.TProductDescription">
+    insert into t_product_description (t_product_description_id, t_product_id, 
+      flag, t_product_descriptioncontext)
+    values (#{tProductDescriptionId,jdbcType=BIGINT}, #{tProductId,jdbcType=BIGINT}, 
+      #{flag,jdbcType=INTEGER}, #{tProductDescriptioncontext,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qianfeng.entity.TProductDescription">
+    insert into t_product_description
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tProductDescriptionId != null">
+        t_product_description_id,
+      </if>
+      <if test="tProductId != null">
+        t_product_id,
+      </if>
+        flag,
+      <if test="tProductDescriptioncontext != null">
+        t_product_descriptioncontext,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tProductDescriptionId != null">
+        #{tProductDescriptionId,jdbcType=BIGINT},
+      </if>
+      <if test="tProductId != null">
+        #{tProductId,jdbcType=BIGINT},
+      </if>
+       true,
+      <if test="tProductDescriptioncontext != null">
+        #{tProductDescriptioncontext,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qianfeng.entity.TProductDescription">
+    update t_product_description
+    <set>
+      <if test="tProductId != null">
+        t_product_id = #{tProductId,jdbcType=BIGINT},
+      </if>
+      <if test="flag != null">
+        flag = #{flag,jdbcType=INTEGER},
+      </if>
+      <if test="tProductDescriptioncontext != null">
+        t_product_descriptioncontext = #{tProductDescriptioncontext,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where t_product_description_id = #{tProductDescriptionId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.qianfeng.entity.TProductDescription">
+    update t_product_description
+    set t_product_id = #{tProductId,jdbcType=BIGINT},
+      flag = #{flag,jdbcType=INTEGER},
+      t_product_descriptioncontext = #{tProductDescriptioncontext,jdbcType=LONGVARCHAR}
+    where t_product_description_id = #{tProductDescriptionId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qianfeng.entity.TProductDescription">
+    update t_product_description
+    set t_product_id = #{tProductId,jdbcType=BIGINT},
+      flag = #{flag,jdbcType=INTEGER}
+    where t_product_description_id = #{tProductDescriptionId,jdbcType=BIGINT}
+  </update>
+</mapper>

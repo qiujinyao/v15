@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qianfeng.mapper.TProductMapper">
+  <resultMap id="BaseResultMap" type="com.qianfeng.entity.TProduct">
+    <id column="t_product_id" jdbcType="BIGINT" property="tProductId" />
+    <result column="t_product_name" jdbcType="VARCHAR" property="tProductName" />
+    <result column="t_product_saleprice" jdbcType="DECIMAL" property="tProductSaleprice" />
+    <result column="t_product_price" jdbcType="DECIMAL" property="tProductPrice" />
+    <result column="t_product_createtime" jdbcType="TIMESTAMP" property="tProductCreatetime" />
+    <result column="t_product_updatetime" jdbcType="TIMESTAMP" property="tProductUpdatetime" />
+    <result column="t_product_type_id" jdbcType="BIGINT" property="tProductTypeId" />
+    <result column="flag" jdbcType="BIT" property="flag" />
+    <result column="t_product_type_name" jdbcType="VARCHAR" property="tProductTypeName" />
+    <result column="t_product_pic" jdbcType="VARCHAR" property="tProductPic" />
+    <result column="t_product_salepoint" jdbcType="VARCHAR" property="tProductSalepoint" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    t_product_id, t_product_name, t_product_saleprice, t_product_price, t_product_createtime,
+    t_product_updatetime, t_product_type_id, flag, t_product_type_name, t_product_pic,
+    t_product_salepoint
+  </sql>
+
+  <select id="listProduct" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_product
+    where flag=1
+  </select>
+
+  <!--分页查询-->
+  <select id="listPageination" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_product
+    where flag=1
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_product
+    where t_product_id = #{tProductId,jdbcType=BIGINT}
+  </select>
+  <update id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    update  t_product set flag=0
+    where t_product_id = #{tProductId,jdbcType=BIGINT}
+  </update>
+  <insert id="insert" parameterType="com.qianfeng.entity.TProduct">
+    insert into t_product (t_product_id, t_product_name, t_product_saleprice,
+      t_product_price, t_product_createtime, t_product_updatetime,
+      t_product_type_id, flag, t_product_type_name,
+      t_product_pic, t_product_salepoint)
+    values (#{tProductId,jdbcType=BIGINT}, #{tProductName,jdbcType=VARCHAR}, #{tProductSaleprice,jdbcType=DECIMAL},
+      #{tProductPrice,jdbcType=DECIMAL}, #{tProductCreatetime,jdbcType=TIMESTAMP}, #{tProductUpdatetime,jdbcType=TIMESTAMP},
+      #{tProductTypeId,jdbcType=BIGINT}, #{flag,jdbcType=INTEGER}, #{tProductTypeName,jdbcType=VARCHAR},
+      #{tProductPic,jdbcType=VARCHAR}, #{tProductSalepoint,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qianfeng.entity.TProduct" useGeneratedKeys="true" keyProperty="tProductId">
+    insert into t_product
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tProductId != null">
+        t_product_id,
+      </if>
+      <if test="tProductName != null">
+        t_product_name,
+      </if>
+      <if test="tProductSaleprice != null">
+        t_product_saleprice,
+      </if>
+      <if test="tProductPrice != null">
+        t_product_price,
+      </if>
+        t_product_createtime,
+        t_product_updatetime,
+      <if test="tProductTypeId != null">
+        t_product_type_id,
+      </if>
+        flag,
+      <if test="tProductTypeName != null">
+        t_product_type_name,
+      </if>
+      <if test="tProductPic != null">
+        t_product_pic,
+      </if>
+      <if test="tProductSalepoint != null">
+        t_product_salepoint,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tProductId != null">
+        #{tProductId,jdbcType=BIGINT},
+      </if>
+      <if test="tProductName != null">
+        #{tProductName,jdbcType=VARCHAR},
+      </if>
+      <if test="tProductSaleprice != null">
+        #{tProductSaleprice,jdbcType=DECIMAL},
+      </if>
+      <if test="tProductPrice != null">
+        #{tProductPrice,jdbcType=DECIMAL},
+      </if>
+       now(),
+       now(),
+      <if test="tProductTypeId != null">
+        #{tProductTypeId,jdbcType=BIGINT},
+      </if>
+       true ,
+      <if test="tProductTypeName != null">
+        #{tProductTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="tProductPic != null">
+        #{tProductPic,jdbcType=VARCHAR},
+      </if>
+      <if test="tProductSalepoint != null">
+        #{tProductSalepoint,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qianfeng.entity.TProduct">
+    update t_product
+    <set>
+      <if test="tProductName != null">
+        t_product_name = #{tProductName,jdbcType=VARCHAR},
+      </if>
+      <if test="tProductSaleprice != null">
+        t_product_saleprice = #{tProductSaleprice,jdbcType=DECIMAL},
+      </if>
+      <if test="tProductPrice != null">
+        t_product_price = #{tProductPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="tProductCreatetime != null">
+        t_product_createtime = #{tProductCreatetime,jdbcType=TIMESTAMP},
+      </if>
+        t_product_updatetime = now(),
+      <if test="tProductTypeId != null">
+        t_product_type_id = #{tProductTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="flag != null">
+        flag = 1,
+      </if>
+      <if test="tProductTypeName != null">
+        t_product_type_name = #{tProductTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="tProductPic != null">
+        t_product_pic = #{tProductPic,jdbcType=VARCHAR},
+      </if>
+      <if test="tProductSalepoint != null">
+        t_product_salepoint = #{tProductSalepoint,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where t_product_id = #{tProductId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qianfeng.entity.TProduct">
+    update t_product
+    set t_product_name = #{tProductName,jdbcType=VARCHAR},
+      t_product_saleprice = #{tProductSaleprice,jdbcType=DECIMAL},
+      t_product_price = #{tProductPrice,jdbcType=DECIMAL},
+      t_product_createtime = #{tProductCreatetime,jdbcType=TIMESTAMP},
+      t_product_updatetime = #{tProductUpdatetime,jdbcType=TIMESTAMP},
+      t_product_type_id = #{tProductTypeId,jdbcType=BIGINT},
+      flag = #{flag,jdbcType=INTEGER},
+      t_product_type_name = #{tProductTypeName,jdbcType=VARCHAR},
+      t_product_pic = #{tProductPic,jdbcType=VARCHAR},
+      t_product_salepoint = #{tProductSalepoint,jdbcType=VARCHAR}
+    where t_product_id = #{tProductId,jdbcType=BIGINT}
+  </update>
+  <update id="deleteChecked" parameterType="java.util.List">
+    update t_product set flag=0 where t_product_id in
+    <foreach collection="deleteIds" open="(" close=")" item="id" separator=",">
+      #{id}
+    </foreach>
+  </update>
+</mapper>

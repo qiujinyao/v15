@@ -1,0 +1,15 @@
+dubbo:
+  application:
+    name: ProductService-Customer
+  registry:
+    protocol: zookeeper
+    address: 49.232.40.240:2181
+server:
+  port: 9090
+spring:
+  thymeleaf:
+    cache: false
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+  mvc:
+    date-format: yyyy-MM-dd HH:mm:ss
